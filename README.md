@@ -1,22 +1,21 @@
 # 简介
 
-用于下载斗鱼视频录播以及弹幕，支持订阅，自动下载，支持调用 [biliLive-tools](https://github.com/renmu123/biliLive-tools) 自动上传，如果有不兼容请查看[更新历史](https://github.com/renmu123/douyu-video-cli/blob/main/CHANGELOG.md)。  
-[视频简介](https://www.bilibili.com/video/BV1tJ4m1a7GQ/)
+用于下载虎牙视频录播，支持调用 [biliLive-tools](https://github.com/renmu123/biliLive-tools) 自动上传，如果有不兼容请查看[更新历史](https://github.com/renmu123/huya-video-cli/blob/main/CHANGELOG.md)。
 
 **node>=20**
 
 # 安装
 
-`npm install -g douyu-cli`
+`npm install -g huya-cli`
 
-默认视频为 ts 格式，如果想要转换为 mp4，那么你需要手动安装[`ffmpeg`](https://github.com/BtbN/FFmpeg-Builds/releases)，并在下载时指定`ffpath`参数，或者也可以使用`douyu config set ffmpegBinPath xxxx`设置可执行文件地址，如果你已经设置为环境变量，也可以设置为`ffmpeg`。
+默认视频为 ts 格式，如果想要转换为 mp4，那么你需要手动安装[`ffmpeg`](https://github.com/BtbN/FFmpeg-Builds/releases)，并在下载时指定`ffpath`参数，或者也可以使用`huya config set ffmpegBinPath xxxx`设置可执行文件地址，如果你已经设置为环境变量，也可以设置为`ffmpeg`。
 
 # 使用
 
 ```bash
-Usage: douyu [options] [command]
+Usage: huya [options] [command]
 
-斗鱼视频下载命令行
+虎牙视频下载命令行
 
 Options:
   -V, --version             output the version number
@@ -31,38 +30,26 @@ Commands:
 
 ## 下载视频
 
-`douyu download https://v.douyu.com/show/yVY8WwdzNyVvLOz9`
-
-你也可以加上`-d`, `-a` 来下载当前视频的所有分 p，并下载弹幕，弹幕为 b 站兼容格式，你可以使用如 [DanmakuFactory](https://github.com/hihkm/DanmakuFactory) 将弹幕转换为 ass 格式进行后续操作。
+`douyu download https://www.huya.com/video/play/1025586572.html`
 
 如果你正在寻找将录播上传到 B 站的工具，可以尝试一下 [biliLive-tools](https://github.com/renmu123/biliLive-tools)，支持将弹幕转换以及压制到视频中并自动上传。
 
 ```bash
-Usage: douyu download [options] [url]
+Usage: huya download [options] [url]
 
 下载视频
 
 Options:
-  -a, --all                            下载所有分p
-  -d, --danmaku                        下载弹幕
   --dir                                下载目录
   -st, --stream-type <string>          清晰度，默认为最高清晰度
   -w, --webhook                        使用webhook
   --url                                webhook地址
-  -nv, --no-video                      不下载视频
   -ffpath, --ffmpeg-bin-path <string>  ffmpeg路径
   -conc, --concurrency <number>        下载并发数 (default: 10)
   -h, --help                           display help for command
 ```
 
-清晰度参数，默认为最大清晰度  
-大致清晰度供参考：  
-原画 2K60：1440p60a  
-高清 1080P60：1080p60  
-高清 720P：high  
-标清 480P：normal
-
-## 订阅
+<!-- ## 订阅
 
 ### 添加订阅
 
@@ -74,7 +61,7 @@ Options:
 
 ### 下载订阅
 
-这个功能会读取订阅主播最近的一次直播回放并进行下载，已下载过的任务不会重复下载。
+这个功能会读取订阅主播最近的一次直播回放并进行下载，已下载过的任务不会重复下载。 -->
 
 #### webhook 功能
 
@@ -98,28 +85,27 @@ curl --location 'http://127.0.0.1:18010/webhook/custom' \
 }'
 ```
 
-你可以搭配 [biliLive-tools](https://github.com/renmu123/biliLive-tools)（0.9.0 版本及以上） 使用来实现自动压制上传。
-如果需要将一天的录播设置为一个分 p，请开启断播续传功能，并将间隔设置为录播间隔往上，建议设置 3 小时以上。
+你可以搭配 [biliLive-tools](https://github.com/renmu123/biliLive-tools)（0.9.0 版本及以上） 使用来实现自动上传。
 
-`douyu sub download`
+<!-- 如果需要将一天的录播设置为一个分 p，请开启断播续传功能，并将间隔设置为录播间隔往上，建议设置 3 小时以上。 -->
 
-### 定时运行下载订阅任务
+<!-- ### 定时运行下载订阅任务
 
 默认时间间隔为 60 分钟，斗鱼录播的分隔时间约为 75 分钟，间隔调整为较短大致上也没什么用。
 
-`douyu sub server`
+`huya sub server`
 
-你也可以使用定时任务来执行 `douyu sub download` 命令，可以到达相同的效果
+你也可以使用定时任务来执行 `huya sub download` 命令，可以到达相同的效果 -->
 
 ## 配置
 
 ### 查看配置
 
-`douyu config print`
+`huya config print`
 
 ### 更新配置
 
-`douyu config set xxx xxx`
+`huya config set xxx xxx`
 
 ## 其他
 
@@ -134,8 +120,6 @@ curl --location 'http://127.0.0.1:18010/webhook/custom' \
 # 开发
 
 node>=20
-
-如果你需要使用一些相关 api 进行二次开发，参考 [api 文档](./docs/api.md)
 
 ## Install
 
