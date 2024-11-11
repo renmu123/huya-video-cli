@@ -1,0 +1,61 @@
+{
+  "name": "huya-cli",
+  "version": "0.1.0",
+  "description": "虎牙视频下载CLI",
+  "homepage": "https://github.com/renmu123/huya-video-cli",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "rimraf dist && tsc",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "publish": "pnpm run build && pnpm publish --access=public",
+    "build:win": "rollup --config rollup-build-exe.config.js && node -v && node --experimental-sea-config sea-config.json && node -e \"require('fs').copyFileSync(process.execPath, 'huya.exe')\" && npx postject huya.exe NODE_SEA_BLOB sea-prep.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 "
+  },
+  "keywords": [
+    "huya",
+    "download",
+    "cli",
+    "video",
+    "虎牙",
+    "视频",
+    "下载",
+    "直播",
+    "live"
+  ],
+  "author": "renmu123",
+  "license": "GPLv3",
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "huya": "dist/command/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@renmu/m3u8-downloader": "^0.2.1",
+    "axios": "^1.7.7",
+    "cli-progress": "^3.12.0",
+    "commander": "^12.1.0",
+    "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "@kineticcafe/rollup-plugin-delete": "3.0.0",
+    "@rollup/plugin-commonjs": "^26.0.3",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/cli-progress": "^3.11.6",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "22.1.0",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.25.0",
+    "tslib": "^2.8.1",
+    "typescript": "^5.6.3"
+  }
+}
