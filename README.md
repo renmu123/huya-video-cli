@@ -30,7 +30,7 @@ Commands:
 
 ## 下载视频
 
-`douyu download https://www.huya.com/video/play/1025586572.html`
+`huya download https://www.huya.com/video/play/1025586572.html`
 
 如果你正在寻找将录播上传到 B 站的工具，可以尝试一下 [biliLive-tools](https://github.com/renmu123/biliLive-tools)，支持将弹幕转换以及压制到视频中并自动上传。
 
@@ -41,7 +41,6 @@ Usage: huya download [options] [url]
 
 Options:
   --dir                                下载目录
-  -st, --stream-type <string>          清晰度，默认为最高清晰度
   -w, --webhook                        使用webhook
   --url                                webhook地址
   -ffpath, --ffmpeg-bin-path <string>  ffmpeg路径
@@ -53,11 +52,11 @@ Options:
 
 ### 添加订阅
 
-`douyu sub add 93589`
+`huya sub add 93589`
 
 ### 移除订阅
 
-`douyu sub remove 93589`
+`huya sub remove 93589`
 
 ### 下载订阅
 

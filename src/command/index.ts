@@ -4,62 +4,35 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Command, Option } from "commander";
 // import up from "../core/up.js";
-// import { downloadVideos, subscribe } from "../core/index.js";
+import { downloadVideo } from "../core.js";
 import { readConfig, writeConfig } from "../config.js";
 import { parseVideoId } from "../utils/index.js";
 
-import type { Config, streamType } from "../types/index.js";
+import type { Config } from "../types/index.js";
 
 export const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(
   fs.readFileSync(path.join(__dirname, "../../package.json"), "utf-8")
 );
 
-const downloadVideos = async (
-  videoId: string,
-  opts: {
-    all?: boolean;
-    danmaku?: boolean;
-    streamType?: streamType;
-    dir?: string;
-    webhook?: boolean;
-    url?: string;
-    video?: boolean;
-    ffmpegBinPath?: string;
-    concurrency?: number;
-  }
-) => {
-  console.log(videoId, opts);
-  // const { downloadVideos } = await import("../core/index.js");
-  // return downloadVideos(videoId, opts);
-};
 const program = new Command();
-
 program.name("huya").description("虎牙视频下载命令行").version(pkg.version);
 
 program
   .command("download [url]")
   .description("下载视频")
-  .option("-a, --all", "下载所有分p")
-  .option("-d, --danmaku", "下载弹幕")
   .option("--dir", "下载目录")
-  .option("-st, --stream-type <string>", "清晰度，默认为最高清晰度")
   .option("-w, --webhook", "使用webhook")
   .option("--url", "webhook地址", "http://127.0.0.1:18010/webhook/custom")
-  .addOption(new Option("-nv, --no-video", "不下载视频").conflicts("webhook"))
   .option("-ffpath, --ffmpeg-bin-path <string>", "ffmpeg路径")
   .option("-conc, --concurrency <number>", "下载并发数", parseFloat, 10)
   .action(
     async (
       url,
       opts: {
-        all?: boolean;
-        danmaku?: boolean;
-        streamType?: streamType;
         dir?: string;
         webhook?: boolean;
         url?: string;
-        video?: boolean;
         ffmpegBinPath?: string;
         concurrency?: number;
       }
@@ -69,7 +42,7 @@ program
       opts.dir = opts.dir ?? config.downloadPath;
       opts.ffmpegBinPath = opts.ffmpegBinPath ?? config.ffmpegBinPath;
       opts.concurrency = opts.concurrency || 10;
-      const downloader = await downloadVideos(videoId, opts);
+      const downloader = await downloadVideo(videoId, opts.dir, opts);
     }
   );
 
@@ -81,8 +54,6 @@ program
 // subscribeSubCommand
 //   .command("download")
 //   .description("下载订阅")
-//   .option("-d, --danmaku", "下载弹幕")
-//   .option("-st, --stream-type <string>", "清晰度，默认为最高清晰度")
 //   .option("--dir", "下载目录")
 //   .option("-w, --webhook", "使用webhook")
 //   .option(
@@ -90,18 +61,14 @@ program
 //     "webhook地址",
 //     "http://127.0.0.1:18010/webhook/custom"
 //   )
-//   .addOption(new Option("-nv, --no-video", "不下载视频").conflicts("webhook"))
 //   .option("-ffpath, --ffmpeg-bin-path <string>", "ffmpeg路径")
 //   .option("-conc, --concurrency <number>", "下载并发数", parseFloat, 10)
 //   .action(
 //     async (options: {
 //       force?: boolean;
-//       danmaku?: boolean;
 //       webhook?: boolean;
 //       url?: string;
-//       streamType?: streamType;
 //       dir?: string;
-//       video?: boolean;
 //       ffmpegBinPath?: string;
 //       concurrency?: number;
 //     }) => {
@@ -150,8 +117,6 @@ program
 //     parseFloat,
 //     60
 //   )
-//   .option("-d, --danmaku", "下载弹幕")
-//   .option("-st, --stream-type <string>", "清晰度，默认为最高清晰度")
 //   .option("--dir", "下载目录")
 //   .option("-w, --webhook", "使用webhook")
 //   .option(
@@ -159,16 +124,13 @@ program
 //     "webhook地址",
 //     "http://127.0.0.1:18010/webhook/custom"
 //   )
-//   .addOption(new Option("-nv, --no-video", "不下载视频").conflicts("webhook"))
 //   .option("-ffpath, --ffmpeg-bin-path <string>", "ffmpeg路径")
 //   .option("-conc, --concurrency <number>", "下载并发数", parseFloat, 10)
 //   .action(
 //     async (options: {
 //       interval?: number;
-//       danmaku?: boolean;
 //       webhook?: boolean;
 //       url?: string;
-//       video?: boolean;
 //       ffmpegBinPath?: string;
 //       concurrency?: number;
 //     }) => {
